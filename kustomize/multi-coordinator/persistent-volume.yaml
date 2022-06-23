@@ -10,3 +10,6 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: local-storage
+  local:
+    path: /home/ubuntu/postgres-data
+    
