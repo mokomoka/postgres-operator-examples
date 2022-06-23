@@ -1,0 +1,5 @@
+namespace: postgres-operator
+
+resources:
+- local-storage.yaml
+- postgres.yaml
