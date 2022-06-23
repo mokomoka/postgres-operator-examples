@@ -2,4 +2,5 @@ namespace: postgres-operator
 
 resources:
 - local-storage.yaml
+- persistent-volume.yaml
 - postgres.yaml
