@@ -13,7 +13,7 @@ spec:
   local:
     path: /home/ubuntu/postgres-data
   nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
+    required:
       nodeSelectorTerms:
       - matchExpressions:
         - key: role
