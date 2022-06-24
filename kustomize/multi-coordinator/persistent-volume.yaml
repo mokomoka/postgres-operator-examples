@@ -12,4 +12,11 @@ spec:
   storageClassName: local-storage
   local:
     path: /home/ubuntu/postgres-data
-    
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: role
+          operator: In
+          values:
+          - coordinator
