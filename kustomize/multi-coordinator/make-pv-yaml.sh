@@ -5,14 +5,18 @@
 
 # 1<$1<$2でなければエラーハンドリングが必要
 
-for var in {1..$1}
+SCRIPT_DIR=`dirname $0`
+cd $SCRIPT_DIR
+
+for var in $(seq 1 $1)
 do
-    sed -e "s/postgres-pv/postgres-pv-${var}/g" persistent-volume.yaml > persistent-volume-${var}.yaml
+    sed -e "s/postgres-pv/postgres-pv-${var}/g" persistent-volume.yaml > "persistent-volume-${var}-coordinator.yaml"
 done
 
-for var in {$(($1+1))...$2}
+for var in $(seq $(($1+1)) $(($1+$2)))
 do
-    cp persistent-volume.yaml persistent-volume-${var}.yaml
-    sed -i "s/postgres-pv/postgres-pv-${var}/g" persistent-volume-${var}.yaml
-    sed -i "s/coordinator/shard/g" persistent-volume-${var}.yaml
+    filename="persistent-volume-${var}-shard.yaml"
+    cp persistent-volume.yaml ${filename}
+    sed -i "s/postgres-pv/postgres-pv-${var}/g" ${filename}
+    sed -i "s/coordinator/shard/g" ${filename}
 done
