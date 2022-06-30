@@ -45,6 +45,16 @@ spec:
             resources:
               requests:
                 storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - coordinator
   patroni:
     dynamicConfiguration:
       synchronous_mode: on
@@ -105,6 +115,16 @@ spec:
             resources:
               requests:
                 storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - shard
   patroni:
     dynamicConfiguration:
       synchronous_mode: on
@@ -159,6 +179,16 @@ spec:
             resources:
               requests:
                 storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - shard
   patroni:
     dynamicConfiguration:
       synchronous_mode: on
