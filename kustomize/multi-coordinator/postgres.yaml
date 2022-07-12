@@ -1,14 +1,14 @@
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
-  name: coordinator
+  name: coordinator-1
 spec:
-  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.3-0
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
   instances:
     - name: instance
-      replicas: 2
+      replicas: 1
       dataVolumeClaimSpec:
         storageClassName: local-storage
         accessModes:
@@ -34,7 +34,77 @@ spec:
             topologyKey: kubernetes.io/hostname
   backups:
     pgbackrest:
-      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-1
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            storageClassName: local-storage
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role
+                  operator: In
+                  values:
+                  - coordinator
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: on
+      postgresql:
+        authentication:
+          superuser:
+            username: postgres
+            password: postgres
+        pg_hba:
+          - host all all 192.168.0.0/24 trust
+          - host all all 127.0.0.1/32 md5
+          - host all all 10.0.0.0/24 md5
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: coordinator-2
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
+  imagePullPolicy: IfNotPresent
+  postgresVersion: 14
+  instances:
+    - name: instance
+      replicas: 1
+      dataVolumeClaimSpec:
+        storageClassName: local-storage
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 10Gi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - coordinator
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: postgres-operator.crunchydata.com/instance
+                operator: Exists
+            topologyKey: kubernetes.io/hostname
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
       - name: repo1
         volume:
@@ -73,7 +143,7 @@ kind: PostgresCluster
 metadata:
   name: shard-1
 spec:
-  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.3-0
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
   instances:
@@ -104,7 +174,7 @@ spec:
             topologyKey: kubernetes.io/hostname
   backups:
     pgbackrest:
-      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-1
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
       - name: repo1
         volume:
@@ -137,7 +207,7 @@ kind: PostgresCluster
 metadata:
   name: shard-2
 spec:
-  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.3-0
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
   instances:
@@ -168,7 +238,7 @@ spec:
             topologyKey: kubernetes.io/hostname
   backups:
     pgbackrest:
-      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-1
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
       - name: repo1
         volume:
