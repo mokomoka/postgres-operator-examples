@@ -36,7 +36,7 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo1
+      - name: repo
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
@@ -106,7 +106,7 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo1
+      - name: repo
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
@@ -147,7 +147,7 @@ spec:
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
   instances:
-    - name: instance1
+    - name: instance
       replicas: 2
       dataVolumeClaimSpec:
         storageClassName: local-storage
@@ -176,7 +176,7 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo1
+      - name: repo
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
@@ -211,7 +211,7 @@ spec:
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
   instances:
-    - name: instance1
+    - name: instance
       replicas: 2
       dataVolumeClaimSpec:
         storageClassName: local-storage
@@ -240,7 +240,7 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo1
+      - name: repo
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
