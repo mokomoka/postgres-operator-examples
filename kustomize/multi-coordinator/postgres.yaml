@@ -12,7 +12,7 @@ spec:
       dataVolumeClaimSpec:
         storageClassName: local-storage
         accessModes:
-        - "ReadWriteOnce"
+        - ReadWriteOnce
         resources:
           requests:
             storage: 10Gi
@@ -36,12 +36,12 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo
+      - name: repo1
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
             accessModes:
-            - "ReadWriteOnce"
+            - ReadWriteOnce
             resources:
               requests:
                 storage: 10Gi
@@ -82,7 +82,7 @@ spec:
       dataVolumeClaimSpec:
         storageClassName: local-storage
         accessModes:
-        - "ReadWriteOnce"
+        - ReadWriteOnce
         resources:
           requests:
             storage: 10Gi
@@ -106,12 +106,12 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo
+      - name: repo1
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
             accessModes:
-            - "ReadWriteOnce"
+            - ReadWriteOnce
             resources:
               requests:
                 storage: 10Gi
@@ -152,7 +152,7 @@ spec:
       dataVolumeClaimSpec:
         storageClassName: local-storage
         accessModes:
-        - "ReadWriteOnce"
+        - ReadWriteOnce
         resources:
           requests:
             storage: 10Gi
@@ -176,12 +176,12 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo
+      - name: repo1
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
             accessModes:
-            - "ReadWriteOnce"
+            - ReadWriteOnce
             resources:
               requests:
                 storage: 10Gi
@@ -216,7 +216,7 @@ spec:
       dataVolumeClaimSpec:
         storageClassName: local-storage
         accessModes:
-        - "ReadWriteOnce"
+        - ReadWriteOnce
         resources:
           requests:
             storage: 10Gi
@@ -240,12 +240,12 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
       repos:
-      - name: repo
+      - name: repo1
         volume:
           volumeClaimSpec:
             storageClassName: local-storage
             accessModes:
-            - "ReadWriteOnce"
+            - ReadWriteOnce
             resources:
               requests:
                 storage: 10Gi
