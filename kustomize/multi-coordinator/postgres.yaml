@@ -6,6 +6,8 @@ spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
+  users:
+    - name: postgres
   instances:
     - name: instance
       replicas: 1
@@ -32,6 +34,8 @@ spec:
               - key: postgres-operator.crunchydata.com/instance
                 operator: Exists
             topologyKey: kubernetes.io/hostname
+  service:
+    type: NodePort
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
@@ -76,6 +80,8 @@ spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
   imagePullPolicy: IfNotPresent
   postgresVersion: 14
+  users:
+    - name: postgres
   instances:
     - name: instance
       replicas: 1
@@ -102,6 +108,8 @@ spec:
               - key: postgres-operator.crunchydata.com/instance
                 operator: Exists
             topologyKey: kubernetes.io/hostname
+  service:
+    type: NodePort
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
