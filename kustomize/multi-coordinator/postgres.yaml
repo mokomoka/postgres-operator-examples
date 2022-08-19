@@ -27,13 +27,6 @@ spec:
                 operator: In
                 values:
                 - coordinator
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: postgres-operator.crunchydata.com/instance
-                operator: Exists
-            topologyKey: kubernetes.io/hostname
   service:
     type: NodePort
   backups:
@@ -101,13 +94,73 @@ spec:
                 operator: In
                 values:
                 - coordinator
-        podAntiAffinity:
+  service:
+    type: NodePort
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            storageClassName: local-storage
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role
+                  operator: In
+                  values:
+                  - coordinator
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: on
+      postgresql:
+        authentication:
+          superuser:
+            username: postgres
+            password: postgres
+        pg_hba:
+          - host all all 192.168.0.0/24 trust
+          - host all all 127.0.0.1/32 md5
+          - host all all 10.0.0.0/24 md5
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: coordinator-3
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
+  imagePullPolicy: IfNotPresent
+  postgresVersion: 14
+  users:
+    - name: postgres
+  instances:
+    - name: instance
+      replicas: 1
+      dataVolumeClaimSpec:
+        storageClassName: local-storage
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+      affinity:
+        nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: postgres-operator.crunchydata.com/instance
-                operator: Exists
-            topologyKey: kubernetes.io/hostname
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - coordinator
   service:
     type: NodePort
   backups:
@@ -173,13 +226,6 @@ spec:
                 operator: In
                 values:
                 - shard
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: postgres-operator.crunchydata.com/instance
-                operator: Exists
-            topologyKey: kubernetes.io/hostname
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
@@ -237,13 +283,63 @@ spec:
                 operator: In
                 values:
                 - shard
-        podAntiAffinity:
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            storageClassName: local-storage
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+      repoHost:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: role
+                  operator: In
+                  values:
+                  - shard
+  patroni:
+    dynamicConfiguration:
+      synchronous_mode: on
+      postgresql:
+        pg_hba:
+          - host all all 192.168.0.0/24 trust
+---
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: shard-3
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.4-0
+  imagePullPolicy: IfNotPresent
+  postgresVersion: 14
+  instances:
+    - name: instance
+      replicas: 2
+      dataVolumeClaimSpec:
+        storageClassName: local-storage
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+      affinity:
+        nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: postgres-operator.crunchydata.com/instance
-                operator: Exists
-            topologyKey: kubernetes.io/hostname
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - shard
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.38-2
