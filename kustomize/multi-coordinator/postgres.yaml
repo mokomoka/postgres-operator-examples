@@ -12,12 +12,11 @@ spec:
     - name: instance
       replicas: 1
       dataVolumeClaimSpec:
-        storageClassName: local-storage
         accessModes:
-        - ReadWriteOnce
+        - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 1Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -43,12 +42,11 @@ spec:
       - name: repo1
         volume:
           volumeClaimSpec:
-            storageClassName: local-storage
             accessModes:
-            - ReadWriteOnce
+            - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: 1Gi
       repoHost:
         affinity:
           nodeAffinity:
@@ -86,12 +84,11 @@ spec:
     - name: instance
       replicas: 1
       dataVolumeClaimSpec:
-        storageClassName: local-storage
         accessModes:
-        - ReadWriteOnce
+        - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 1Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -117,12 +114,11 @@ spec:
       - name: repo1
         volume:
           volumeClaimSpec:
-            storageClassName: local-storage
             accessModes:
-            - ReadWriteOnce
+            - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: 1Gi
       repoHost:
         affinity:
           nodeAffinity:
@@ -158,12 +154,11 @@ spec:
     - name: instance
       replicas: 2
       dataVolumeClaimSpec:
-        storageClassName: local-storage
         accessModes:
-        - ReadWriteOnce
+        - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 1Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -187,12 +182,11 @@ spec:
       - name: repo1
         volume:
           volumeClaimSpec:
-            storageClassName: local-storage
             accessModes:
-            - ReadWriteOnce
+            - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: 1Gi
       repoHost:
         affinity:
           nodeAffinity:
@@ -222,12 +216,11 @@ spec:
     - name: instance
       replicas: 2
       dataVolumeClaimSpec:
-        storageClassName: local-storage
         accessModes:
-        - ReadWriteOnce
+        - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 1Gi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -251,12 +244,11 @@ spec:
       - name: repo1
         volume:
           volumeClaimSpec:
-            storageClassName: local-storage
             accessModes:
-            - ReadWriteOnce
+            - "ReadWriteOnce"
             resources:
               requests:
-                storage: 10Gi
+                storage: 1Gi
       repoHost:
         affinity:
           nodeAffinity:
