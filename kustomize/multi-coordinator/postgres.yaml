@@ -68,7 +68,7 @@ spec:
         pg_hba:
           - host all all 192.168.0.0/16 trust
           - host all all 127.0.0.1/32 md5
-          - host all all 10.0.0.0/24 md5
+          - host all all 10.0.0.0/16 md5
 ---
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
@@ -140,7 +140,7 @@ spec:
         pg_hba:
           - host all all 192.168.0.0/16 trust
           - host all all 127.0.0.1/32 md5
-          - host all all 10.0.0.0/24 md5
+          - host all all 10.0.0.0/16 md5
 ---
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
