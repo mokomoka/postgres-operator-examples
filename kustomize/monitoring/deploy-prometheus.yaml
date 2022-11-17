@@ -83,4 +83,12 @@ spec:
           defaultMode: 420
           name: alertmanager-rules-config
         name: alertmanagerrules
-
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: In
+                  values:
+                  - ""
