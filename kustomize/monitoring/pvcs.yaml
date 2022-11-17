@@ -11,6 +11,9 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: local-storage
+  selector:
+    app: alertmanager
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -25,6 +28,9 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: local-storage
+  selector:
+    app: grafana
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -39,3 +45,6 @@ spec:
   resources:
     requests:
       storage: 5Gi
+  storageClassName: local-storage
+  selector:
+    app: prometheus 
